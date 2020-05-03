@@ -1,1 +1,63 @@
-<p>car-details works!</p>
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="card">
+      <div class="card-body">
+
+        <div class="row">
+          <label class="col-sm-auto">
+            <img src="data:image/JPEG;base64,{{car.carImage}}" alt="" style='width:600px; height: 450px;'>
+          </label>
+          <label class="col-sm-auto">
+
+          <div class="row">
+            <label class="col">Brand:</label>
+            <label class="col">{{car.brandTitle}}</label>
+          </div>
+
+          <div class="row">
+            <label class="col">Model:</label>
+            <label class="col">{{car.carModel}}</label>
+          </div>
+
+          <div class="row">
+            <label class="col">Transmission:</label>
+            <label class="col">{{car.typeTransmission}}</label>
+          </div>
+
+          <div class="row">
+            <label class="col">Engine:</label>
+            <label class="col">{{car.typeEngine}}</label>
+          </div>
+
+          <div class="row">
+            <label class="col">Mileage:</label>
+            <label class="col">{{car.carMileage}} thousand km</label>
+          </div>
+
+          <div class="row">
+            <label class="col">Country:</label>
+            <label class="col">{{car.countryLocation}}</label>
+          </div>
+
+          <div class="row">
+            <label class="col">City:</label>
+            <label class="col">{{car.cityLocation}}</label>
+          </div>
+
+          <div class="row">
+            <label class="col">Cost:</label>
+            <label class="col">{{car.carCost}} $</label>
+          </div>
+
+          <div class="row">
+            <label class="col">Status:</label>
+            <label class="col">{{car.carStatus}}</label>
+          </div>
+
+        </label>
+      </div>
+
+      </div>
+    </div>
+  </div>
+</div>

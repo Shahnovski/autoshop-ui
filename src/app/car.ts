@@ -3,11 +3,12 @@ export class Car {
 
   id: number;
   brandId: number;
+  brandTitle: string;
   ownerId: number;
   carModel: string;
   typeTransmission: TypeTransmission;
   typeEngine: TypeEngine;
-  mileageCar: number;
+  carMileage: number;
   carStatus: string;
   carCost: number;
   countryLocation: string;

@@ -1,1 +1,115 @@
-<p>create-car works!</p>
+<h3>Add Advertisement</h3>
+<div class="card">
+  <div class="card-body">
+    <div [hidden]="submitted" style="width: 400px;">
+      <form (ngSubmit)="onSubmit()" enctype="multipart/form-data" [formGroup]="carForm" novalidate>
+
+        <div class="form-group">
+          <label class="mr-sm-2" for="brandTitle">Brand</label>
+          <select class="custom-select mr-sm-2" id="brandTitle" formControlName="brandTitle" required [(ngModel)]="car.brandTitle" #id [(ngModel)] = "car.brandTitle" name="brandTitle">
+            <option *ngFor="let type of brandTitleValues" value="{{type[1]}}">{{type[1]}}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-4">Car model</label>
+          <label for="carModel"></label><input type="text" class="form-control" id="carModel" formControlName="carModel" required [(ngModel)]="car.carModel" #id [(ngModel)] = "car.carModel" name="carModel">
+        </div>
+        <div *ngIf="carForm.controls['carModel'].invalid && (carForm.controls['carModel'].dirty || carForm.controls['carModel'].touched)" class="alert alert-danger">
+          <div *ngIf="carForm.controls['carModel'].errors.required">
+            Car model is required.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="mr-sm-2" for="typeTransmission">Transmission</label>
+          <select class="custom-select mr-sm-2" id="typeTransmission" formControlName="typeTransmission" required [(ngModel)]="car.typeTransmission" #id [(ngModel)] = "car.typeTransmission" name="typeTransmission">
+            <option *ngFor="let type of typeTransmissionValues" value="{{type[0]}}">{{type[1]}}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="mr-sm-2" for="typeEngine">Engine</label>
+          <select class="custom-select mr-sm-2" id="typeEngine" formControlName="typeEngine" required [(ngModel)]="car.typeEngine" #id [(ngModel)] = "car.typeEngine" name="typeEngine">
+            <option *ngFor="let type of typeEngineValues" value="{{type[0]}}">{{type[1]}}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-4">Car mileage</label>
+          <label for="carMileage"></label><input type="text" class="form-control" id="carMileage" formControlName="carMileage" required [(ngModel)]="car.carMileage" #id [(ngModel)] = "car.carMileage" name="carMileage">
+        </div>
+        <div *ngIf="carForm.controls['carMileage'].invalid && (carForm.controls['carMileage'].dirty || carForm.controls['carMileage'].touched)" class="alert alert-danger">
+          <div *ngIf="carForm.controls['carMileage'].errors.required">
+            Car mileage is required.
+          </div>
+          <div *ngIf="carForm.controls['carMileage'].errors.pattern">
+            Car mileage must be a number.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-4">Country</label>
+          <label for="countryLocation"></label><input type="text" class="form-control" id="countryLocation" formControlName="countryLocation" required [(ngModel)]="car.countryLocation" #id [(ngModel)] = "car.countryLocation" name="countryLocation">
+        </div>
+        <div *ngIf="carForm.controls['countryLocation'].invalid && (carForm.controls['countryLocation'].dirty || carForm.controls['countryLocation'].touched)" class="alert alert-danger">
+          <div *ngIf="carForm.controls['countryLocation'].errors.required">
+            Country is required.
+          </div>
+          <div *ngIf="carForm.controls['countryLocation'].errors.pattern">
+            Country must contain only letters.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-4">City</label>
+          <label for="cityLocation"></label><input type="text" class="form-control" id="cityLocation" formControlName="cityLocation" required [(ngModel)]="car.cityLocation" #id [(ngModel)] = "car.cityLocation" name="cityLocation">
+        </div>
+        <div *ngIf="carForm.controls['cityLocation'].invalid && (carForm.controls['cityLocation'].dirty || carForm.controls['cityLocation'].touched)" class="alert alert-danger">
+          <div *ngIf="carForm.controls['cityLocation'].errors.required">
+            City is required.
+          </div>
+          <div *ngIf="carForm.controls['cityLocation'].errors.pattern">
+            City must contain only letters.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-4">Car cost</label>
+          <label for="carCost"></label><input type="text" class="form-control" id="carCost" formControlName="carCost" required [(ngModel)]="car.carCost" #id [(ngModel)] = "car.carCost" name="carCost">
+        </div>
+        <div *ngIf="carForm.controls['carCost'].invalid && (carForm.controls['carCost'].dirty || carForm.controls['carCost'].touched)" class="alert alert-danger">
+          <div *ngIf="carForm.controls['carCost'].errors.required">
+            Car cost is required.
+          </div>
+          <div *ngIf="carForm.controls['carCost'].errors.pattern">
+            Car cost must be a number.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-md-4">Car status</label>
+          <label for="carStatus"></label><input type="text" class="form-control" id="carStatus" formControlName="carStatus" required [(ngModel)]="car.carStatus" #id [(ngModel)] = "car.carStatus" name="carStatus">
+        </div>
+        <div *ngIf="carForm.controls['carStatus'].invalid && (carForm.controls['carStatus'].dirty || carForm.controls['carStatus'].touched)" class="alert alert-danger">
+          <div *ngIf="carForm.controls['carStatus'].errors.required">
+            Car status is required.
+          </div>
+          <div *ngIf="carForm.controls['carStatus'].errors.pattern">
+            Car status is very long.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="carImage">Image: </label>
+          <br>
+          <input type="file" id="carImage" (change)="handleImageInput($event.target.files)">
+        </div>
+
+        <div class="form-group">
+          <button type="submit" [disabled]="carForm.invalid" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
