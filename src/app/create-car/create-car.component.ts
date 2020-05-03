@@ -16,7 +16,6 @@ import {Observable} from 'rxjs';
 export class CreateCarComponent implements OnInit {
   car: Car = new Car();
   brands: Observable<Brand[]>;
-  brands2: Array<Brand> = [];
   carForm: FormGroup;
   submitted = false;
   imageSelected = false;
@@ -59,18 +58,11 @@ export class CreateCarComponent implements OnInit {
     }
   }
 
-  initBrandTitleValues() {
-    this.brands = this.brandService.getBrandList();
-    this.brands.subscribe(v => this.brands2 = v);
-    for (const item of this.brands2) {
-      this.brandTitleValues.push([item.id, item.brandTitle]);
-    }
-  }
-
   ngOnInit(): void {
     this.initTypeEngineValues();
     this.initTypeTransmissionValues();
-    this.initBrandTitleValues();
+    this.brands = this.brandService.getBrandList();
+    /*this.initBrandTitleValues();*/
   }
 
   newCar(): void {
