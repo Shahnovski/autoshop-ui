@@ -18,16 +18,13 @@ export class CarListComponent implements OnInit {
   }
 
   reloadData() {
-    this.cars = this.carService.getCarsList();
+    this.carService.getCarsList().subscribe(
+      data => {
+        this.cars = data;
+      },
+      error => {
+        console.log(error);
+      });
   }
 
-  deleteEmployee(id: number) {
-    this.carService.deleteCar(id)
-      .subscribe(
-        data => {
-          console.log(data);
-          this.reloadData();
-        },
-        error => console.log(error));
-  }
 }

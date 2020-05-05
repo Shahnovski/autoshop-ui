@@ -19,26 +19,26 @@ export class CreateCarComponent implements OnInit {
   carForm: FormGroup;
   submitted = false;
   imageSelected = false;
-  carImage: Blob;
   typeTransmissionValues: Array<Array<string>> = [];
   typeEngineValues: Array<Array<string>> = [];
-  brandTitleValues: Array<[number, string]> = [];
+  myReader: FileReader = new FileReader();
 
   constructor(private carService: CarService, private brandService: BrandService, private fb: FormBuilder, private router: Router) {
+    this.router.urlUpdateStrategy = 'eager';
     this.createForm();
   }
 
   createForm() {
     this.carForm = this.fb.group({
-      brandTitle: ['', Validators.required ],
+      brandId: ['', Validators.required ],
       carModel: ['', Validators.required ],
       typeTransmission: ['', Validators.required ],
       typeEngine: ['', Validators.required ],
-      carMileage: ['', Validators.required, Validators.pattern('^[1-9]\d*$') ],
-      cityLocation: ['', Validators.required, Validators.pattern('[A-z]+$') ],
-      countryLocation: ['', Validators.required, Validators.pattern('[A-z]+$') ],
-      carCost: ['', Validators.required, Validators.pattern('^[0-9]*[.,]?[0-9]+$') ],
-      carStatus: ['', Validators.required, Validators.maxLength(15) ]
+      carMileage: ['', [Validators.required, Validators.pattern('^[1-9]\\d*$')] ],
+      cityLocation: ['', [Validators.required, Validators.pattern('^[A-z\\s-]+$')] ],
+      countryLocation: ['', [Validators.required, Validators.pattern('^[A-z\\s-]+$')] ],
+      carCost: ['', [Validators.required, Validators.pattern('^[0-9]*[.,]?[0-9]+$')] ],
+      carStatus: ['', [Validators.required, Validators.maxLength(15)] ]
     });
   }
 
@@ -62,7 +62,6 @@ export class CreateCarComponent implements OnInit {
     this.initTypeEngineValues();
     this.initTypeTransmissionValues();
     this.brands = this.brandService.getBrandList();
-    /*this.initBrandTitleValues();*/
   }
 
   newCar(): void {
@@ -79,6 +78,8 @@ export class CreateCarComponent implements OnInit {
       },
       error => console.log(error));
     this.car = new Car();
+    /*setTimeout(() => { this.router.navigate(['cars']); }, 100);*/
+    this.router.navigate(['cars']);
   }
 
   onSubmit() {
@@ -86,7 +87,12 @@ export class CreateCarComponent implements OnInit {
   }
 
   handleImageInput(files: FileList) {
+    this.myReader.onloadend = (e) => {
+      this.car.carImage = this.myReader.result.toString().slice(23);
+    };
+    this.myReader.readAsDataURL(files.item(0));
     this.imageSelected = true;
-    this.carImage = files.item(0);
   }
 }
+
+

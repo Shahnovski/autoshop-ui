@@ -1,3 +1,4 @@
+<br>
 <h3>Add Advertisement</h3>
 <div class="card">
   <div class="card-body">
@@ -5,8 +6,8 @@
       <form (ngSubmit)="onSubmit()" enctype="multipart/form-data" [formGroup]="carForm" novalidate>
 
         <div class="form-group">
-          <label class="mr-sm-2" for="brandTitle">Brand</label>
-          <select class="custom-select mr-sm-2" id="brandTitle" formControlName="brandTitle" required [(ngModel)]="car.brandTitle" #id [(ngModel)] = "car.brandTitle" name="brandTitle">
+          <label class="mr-sm-2" for="brandId">Brand</label>
+          <select class="custom-select mr-sm-2" id="brandId" formControlName="brandId" required [(ngModel)]="car.brandId" #id [(ngModel)] = "car.brandId" name="brandId">
             <option *ngFor="let brand of brands | async" value="{{brand.id}}">{{brand.brandTitle}}</option>
           </select>
         </div>
@@ -44,7 +45,7 @@
             Car mileage is required.
           </div>
           <div *ngIf="carForm.controls['carMileage'].errors.pattern">
-            Car mileage must be a number.
+            Car mileage must be a integer number.
           </div>
         </div>
 
@@ -95,7 +96,7 @@
           <div *ngIf="carForm.controls['carStatus'].errors.required">
             Car status is required.
           </div>
-          <div *ngIf="carForm.controls['carStatus'].errors.pattern">
+          <div *ngIf="carForm.controls['carStatus'].errors.maxlength">
             Car status is very long.
           </div>
         </div>
@@ -107,7 +108,7 @@
         </div>
 
         <div class="form-group">
-          <button type="submit" [disabled]="carForm.invalid" class="btn btn-primary">Submit</button>
+          <button type="submit" [disabled]="(carForm.invalid || !imageSelected)"  class="btn btn-primary">Submit</button>
         </div>
       </form>
     </div>

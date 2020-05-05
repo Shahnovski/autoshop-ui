@@ -13,7 +13,7 @@ export class Car {
   carCost: number;
   countryLocation: string;
   cityLocation: string;
-  carImage: Blob;
+  carImage: string;
 
 }
 
