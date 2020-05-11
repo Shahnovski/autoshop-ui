@@ -23,8 +23,11 @@ export class CreateCarComponent implements OnInit {
   typeEngineValues: Array<Array<string>> = [];
   myReader: FileReader = new FileReader();
 
-  constructor(private carService: CarService, private brandService: BrandService, private fb: FormBuilder, private router: Router) {
-    this.router.urlUpdateStrategy = 'eager';
+  constructor(private carService: CarService,
+              private brandService: BrandService,
+              private fb: FormBuilder,
+              private router: Router) {
+
     this.createForm();
   }
 
@@ -64,22 +67,16 @@ export class CreateCarComponent implements OnInit {
     this.brands = this.brandService.getBrandList();
   }
 
-  newCar(): void {
-    this.submitted = false;
-    this.car = new Car();
-  }
-
   save() {
     console.log(this.car);
     this.carService.createCar(this.car).subscribe(
       data => {
         this.car = new Car();
         this.car = data;
+        this.car = new Car();
+        this.router.navigate(['cars']);
       },
       error => console.log(error));
-    this.car = new Car();
-    /*setTimeout(() => { this.router.navigate(['cars']); }, 100);*/
-    this.router.navigate(['cars']);
   }
 
   onSubmit() {
