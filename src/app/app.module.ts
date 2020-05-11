@@ -8,6 +8,7 @@ import { CarDetailsComponent } from './car-details/car-details.component';
 import { CarListComponent } from './car-list/car-list.component';
 import { CarEditComponent } from './car-edit/car-edit.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { LoginComponent } from './auth/login/login.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     CreateCarComponent,
     CarDetailsComponent,
     CarListComponent,
-    CarEditComponent
+    CarEditComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
