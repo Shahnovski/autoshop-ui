@@ -13,7 +13,7 @@ export class CarDetailsComponent implements OnInit {
   car: Car = new Car();
   param: string;
 
-  constructor(private route: ActivatedRoute, private carService: CarService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private carService: CarService) { }
 
   getCarDetails(id) {
     this.carService.getCar(id).subscribe(
@@ -27,6 +27,16 @@ export class CarDetailsComponent implements OnInit {
   ngOnInit() {
     this.param = 'id';
     this.getCarDetails(this.route.snapshot.params[this.param]);
+  }
+
+  deleteCar(id: number) {
+    this.carService.deleteCar(id)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.router.navigate(['cars']);
+        },
+        error => console.log(error));
   }
 
 }

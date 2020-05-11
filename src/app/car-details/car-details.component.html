@@ -7,7 +7,7 @@
           <label class="col-sm-auto">
             <img src="data:image/JPEG;base64,{{car.carImage}}" alt="" style='width:600px; height: 450px;'>
           </label>
-          <label class="col-sm-auto">
+          <div class="col-sm-auto">
 
           <div class="row">
             <label class="col">Brand:</label>
@@ -54,9 +54,12 @@
             <label class="col">{{car.carStatus}}</label>
           </div>
 
-        </label>
-      </div>
+            <br>
+            <p><button [routerLink]="['/edit/', car.id]" routerLinkActive="active" class="btn btn-outline-info">Edit</button></p>
+            <p><button (click)="deleteCar(car.id)" class="btn btn-outline-danger">Delete</button></p>
 
+        </div>
+      </div>
       </div>
     </div>
   </div>
