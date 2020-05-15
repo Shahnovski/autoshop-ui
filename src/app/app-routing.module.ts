@@ -5,6 +5,7 @@ import { CarDetailsComponent } from './car-details/car-details.component';
 import { CreateCarComponent } from './create-car/create-car.component';
 import { CarEditComponent } from './car-edit/car-edit.component';
 import { LoginComponent } from './auth/login/login.component';
+import { RegistrationComponent } from './auth/registration/registration.component';
 
 const routes: Routes = [
   { path: 'cars', component: CarListComponent },
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'add', component: CreateCarComponent },
   { path: 'edit/:id', component: CarEditComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'registration', component: RegistrationComponent }
 ];
 
 @NgModule({

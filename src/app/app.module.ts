@@ -9,6 +9,7 @@ import { CarListComponent } from './car-list/car-list.component';
 import { CarEditComponent } from './car-edit/car-edit.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { LoginComponent } from './auth/login/login.component';
+import { RegistrationComponent } from './auth/registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { LoginComponent } from './auth/login/login.component';
     CarDetailsComponent,
     CarListComponent,
     CarEditComponent,
-    LoginComponent
+    LoginComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,

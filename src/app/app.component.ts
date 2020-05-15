@@ -44,6 +44,7 @@ export class AppComponent implements OnInit {
       }, error => {
         console.log(error);
         this.isUserLoggedIn = false;
+        this.router.navigate(['login']);
       });
   }
 }
