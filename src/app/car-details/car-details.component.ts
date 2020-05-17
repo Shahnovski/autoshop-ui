@@ -3,7 +3,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { CarService } from '../car.service';
 import { AuthService } from '../auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-car-details',

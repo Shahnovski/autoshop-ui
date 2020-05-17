@@ -1,8 +1,9 @@
 import {Observable, of} from 'rxjs';
 import { CarService } from '../car.service';
-import { Car } from '../car';
+import {Car, TypeEngine, TypeTransmission} from '../car';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import {Brand} from '../brand';
 
 @Component({
   selector: 'app-car-list',
@@ -20,10 +21,18 @@ export class CarListComponent implements OnInit {
   sortBy: string;
   sortFields: string[][];
   filters: string[][] = [];
-  filterValue: string;
-  filterKey: string;
+  filterCarCost: string;
+  filterTypeTransmission: string;
+  filterTypeEngine: string;
+  filterOwner: string;
+  listOfCosts: number[];
+  listOfOwns: Array<Array<string>> = [];
+  typeTransmissionValues: Array<Array<string>> = [];
+  typeEngineValues: Array<Array<string>> = [];
 
-  constructor(private carService: CarService, private route: ActivatedRoute, private router: Router) {}
+  constructor(private carService: CarService,
+              private route: ActivatedRoute,
+              private router: Router) {}
 
   ngOnInit() {
     this.totalElements = 0;
@@ -31,8 +40,16 @@ export class CarListComponent implements OnInit {
     this.pageNumber = 1;
     this.pageSize = 3;
     this.sortBy = 'id';
-    this.filterValue = '';
-    this.filterKey = 'id';
+    this.filterCarCost = '';
+    this.filterTypeTransmission = '';
+    this.filterTypeEngine = '';
+    this.filterOwner = '';
+    this.listOfCosts = [0, 6000, 7000, 8000];
+    this.listOfOwns = [['ALL', 'All advertisements'], ['MY', 'Only my advertisements']];
+    this.initPageSizesArray();
+    this.initSortFields();
+    this.initTypeEngineValues();
+    this.initTypeTransmissionValues();
     this.reloadData();
   }
 
@@ -60,11 +77,26 @@ export class CarListComponent implements OnInit {
     }
   }
 
-  changeDocsOnPage() {
-    this.reloadData();
+  initTypeTransmissionValues() {
+    this.typeTransmissionValues.push(['ALL', 'All']);
+    for (const item in TypeTransmission) {
+      if (TypeTransmission.hasOwnProperty(item)) {
+        this.typeTransmissionValues.push([item, TypeTransmission[item]]);
+      }
+    }
   }
 
-  changeSortBy() {
+  initTypeEngineValues() {
+    this.typeEngineValues.push(['ALL', 'All']);
+    for (const item in TypeEngine) {
+      if (TypeEngine.hasOwnProperty(item)) {
+        this.typeEngineValues.push([item, TypeEngine[item]]);
+      }
+    }
+  }
+
+  changeCarsOnPage() {
+    this.pageNumber = 1;
     this.reloadData();
   }
 
@@ -87,6 +119,35 @@ export class CarListComponent implements OnInit {
     }
   }
 
+  addFilter(filterKey: string, filterValue: string) {
+    const index = this.findFilterByRey(filterKey);
+    if (index !== -1) {
+      this.filters.splice(index, 1);
+    }
+    if (filterValue !== 'ALL') {
+      this.filters.push([filterKey, filterValue]);
+    }
+  }
+
+  deleteAllFilters() {
+    this.filterCarCost = '';
+    this.filterTypeTransmission = '';
+    this.filterTypeEngine = '';
+    this.filterOwner = '';
+    this.filters = [];
+    this.pageNumber = 1;
+    this.reloadData();
+  }
+
+  findFilterByRey(key: string): number {
+    for (let i = 0; i < this.filters.length; i++) {
+      if (this.filters[i][0] === key) {
+        return i;
+      }
+    }
+    return -1;
+  }
+
   reloadData() {
     if (this.pageNumber == null) {
       this.pageNumber = 1;
@@ -97,7 +158,6 @@ export class CarListComponent implements OnInit {
         this.totalElements = data.totalElements;
         this.totalPages = data.totalPages;
         this.initPaginationArray();
-        console.log(data);
       },
       error => {
         console.log(error);
