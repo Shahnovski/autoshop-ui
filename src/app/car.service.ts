@@ -27,8 +27,23 @@ export class CarService {
     return this.http.delete(`${this.baseUrl}/${id}`, {responseType: 'text'});
   }
 
-  getCarsList(): Observable<any> {
-    return this.http.get(`${this.baseUrl}`);
+  getCarsList(page: number, size: number, sortBy: string, filters: string[][]): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded',
+      Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+      'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
+    });
+    const body = new URLSearchParams();
+    body.set('page', page.toString());
+    body.set('size', size.toString());
+    body.set('sort', sortBy);
+    body.set('filter', JSON.stringify(filters).toString());
+    console.log(`${this.baseUrl}` + '?' + body.toString());
+    return this.http.get(`${this.baseUrl}` + '?' + body.toString(), { headers, withCredentials: true });
   }
+
+  /*getCarsList(): Observable<any> {
+    return this.http.get(`${this.baseUrl}`);
+  }*/
 
 }
