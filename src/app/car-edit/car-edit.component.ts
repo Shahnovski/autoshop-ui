@@ -3,7 +3,7 @@ import { Car, TypeTransmission, TypeEngine } from '../car';
 import { BrandService } from '../brand.service';
 import { Brand } from '../brand';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroupDirective, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {Observable} from 'rxjs';
 
@@ -20,6 +20,7 @@ export class CarEditComponent implements OnInit {
   typeEngineValues: Array<Array<string>> = [];
   myReader: FileReader = new FileReader();
   param: string;
+  rightTypeFile: boolean;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -71,6 +72,7 @@ export class CarEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.rightTypeFile = true;
     this.initTypeEngineValues();
     this.initTypeTransmissionValues();
     this.brands = this.brandService.getBrandList();
@@ -85,6 +87,7 @@ export class CarEditComponent implements OnInit {
   }
 
   handleImageInput(files: FileList) {
+    this.rightTypeFile = (files.item(0).type === 'image/jpeg');
     this.myReader.onloadend = (e) => {
       this.car.carImage = this.myReader.result.toString().slice(23);
     };

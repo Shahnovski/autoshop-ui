@@ -22,6 +22,7 @@ export class CreateCarComponent implements OnInit {
   typeTransmissionValues: Array<Array<string>> = [];
   typeEngineValues: Array<Array<string>> = [];
   myReader: FileReader = new FileReader();
+  rightTypeFile: boolean;
 
   constructor(private carService: CarService,
               private brandService: BrandService,
@@ -84,6 +85,7 @@ export class CreateCarComponent implements OnInit {
   }
 
   handleImageInput(files: FileList) {
+    this.rightTypeFile = (files.item(0).type === 'image/jpeg');
     this.myReader.onloadend = (e) => {
       this.car.carImage = this.myReader.result.toString().slice(23);
     };
