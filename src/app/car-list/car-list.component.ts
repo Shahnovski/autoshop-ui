@@ -4,6 +4,7 @@ import {Car, TypeEngine, TypeTransmission} from '../car';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {Brand} from '../brand';
+import {BrandService} from '../brand.service';
 
 @Component({
   selector: 'app-car-list',
@@ -12,6 +13,7 @@ import {Brand} from '../brand';
 })
 export class CarListComponent implements OnInit {
   cars: Observable<Car[]>;
+  brands: Observable<Brand[]>;
   totalElements: number;
   totalPages: number;
   paginationArray: number[];
@@ -25,12 +27,14 @@ export class CarListComponent implements OnInit {
   filterTypeTransmission: string;
   filterTypeEngine: string;
   filterOwner: string;
+  filterBrand: string;
   listOfCosts: number[];
   listOfOwns: Array<Array<string>> = [];
   typeTransmissionValues: Array<Array<string>> = [];
   typeEngineValues: Array<Array<string>> = [];
 
   constructor(private carService: CarService,
+              private brandService: BrandService,
               private route: ActivatedRoute,
               private router: Router) {}
 
@@ -40,12 +44,10 @@ export class CarListComponent implements OnInit {
     this.pageNumber = 1;
     this.pageSize = 3;
     this.sortBy = 'id';
-    this.filterCarCost = '';
-    this.filterTypeTransmission = '';
-    this.filterTypeEngine = '';
-    this.filterOwner = '';
     this.listOfCosts = [0, 6000, 7000, 8000];
     this.listOfOwns = [['ALL', 'All advertisements'], ['MY', 'Only my advertisements']];
+    this.brands = this.brandService.getBrandList();
+    this.setDefaultFilterValues();
     this.initPageSizesArray();
     this.initSortFields();
     this.initTypeEngineValues();
@@ -95,6 +97,14 @@ export class CarListComponent implements OnInit {
     }
   }
 
+  setDefaultFilterValues() {
+    this.filterCarCost = '0';
+    this.filterTypeTransmission = 'ALL';
+    this.filterTypeEngine = 'ALL';
+    this.filterOwner = 'ALL';
+    this.filterBrand = 'ALL';
+  }
+
   changeCarsOnPage() {
     this.pageNumber = 1;
     this.reloadData();
@@ -130,10 +140,7 @@ export class CarListComponent implements OnInit {
   }
 
   deleteAllFilters() {
-    this.filterCarCost = '';
-    this.filterTypeTransmission = '';
-    this.filterTypeEngine = '';
-    this.filterOwner = '';
+    this.setDefaultFilterValues();
     this.filters = [];
     this.pageNumber = 1;
     this.reloadData();

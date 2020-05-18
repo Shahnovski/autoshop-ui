@@ -1,15 +1,31 @@
 <p class="container content">
+
+  <div class="text-right">
+    <button [routerLink]="['/add/']" routerLinkActive="active" class="btn btn-info mr-sm-2">Create new advertisement</button>
+  </div>
+
   <ul class="pagination">
-    <div class="form-group">
+    <div class="form-group form-row">
+      <div class="form-group col">
       <label class="mr-sm-2" for="sortBy" style="margin-left: 10px;">Sort adverts by</label>
       <select class="custom-select mr-sm-2" id="sortBy" [(ngModel)]="sortBy" name="sortBy" (change)="changeCarsOnPage()">
         <option *ngFor="let field of sortFields" [value]="field[0]">{{field[1]}}</option>
       </select>
+      </div>
     </div>
   </ul>
 
   <h4>Filters</h4>
     <div class="form-group form-row">
+
+      <div class="form-group col">
+        <label class="mr-sm-2">Brand</label>
+        <select class="custom-select mr-sm-2" id="brand" placeholder="Value"
+                [(ngModel)]="filterBrand" (ngModelChange)="addFilter('brand', filterBrand)">
+          <option value="ALL">All</option>
+          <option *ngFor="let brand of brands | async" value="{{brand.id}}">{{brand.brandTitle}}</option>
+        </select>
+      </div>
 
       <div class="form-group col">
         <label class="mr-sm-2">Minimum car cost</label>
