@@ -41,9 +41,4 @@ export class CarService {
     console.log(`${this.baseUrl}` + '?' + body.toString());
     return this.http.get(`${this.baseUrl}` + '?' + body.toString(), { headers, withCredentials: true });
   }
-
-  /*getCarsList(): Observable<any> {
-    return this.http.get(`${this.baseUrl}`);
-  }*/
-
 }
