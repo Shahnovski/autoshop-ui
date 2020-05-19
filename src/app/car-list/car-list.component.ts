@@ -44,7 +44,7 @@ export class CarListComponent implements OnInit {
     this.pageNumber = 1;
     this.pageSize = 3;
     this.sortBy = 'id';
-    this.listOfCosts = [0, 6000, 7000, 8000];
+    this.listOfCosts = [0, 5000, 10000, 15000, 20000];
     this.listOfOwns = [['ALL', 'All advertisements'], ['MY', 'Only my advertisements']];
     this.brands = this.brandService.getBrandList();
     this.setDefaultFilterValues();
