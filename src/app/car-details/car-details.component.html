@@ -55,12 +55,53 @@
           </div>
 
             <br>
-            <p><button *ngIf="flagOfEditAndDelite" [routerLink]="['/edit/', car.id]" routerLinkActive="active" class="btn btn-outline-info">Edit</button></p>
-            <p><button *ngIf="flagOfEditAndDelite" (click)="deleteCar(car.id)" class="btn btn-outline-danger">Delete</button></p>
+            <p><button *ngIf="flagOfEditAndDelete" [routerLink]="['/edit/', car.id]" routerLinkActive="active" class="btn btn-outline-info">Edit</button></p>
+            <p><button *ngIf="flagOfEditAndDelete" (click)="deleteCar(car.id)" class="btn btn-outline-danger">Delete</button></p>
 
         </div>
       </div>
       </div>
     </div>
+    <br>
+    <div *ngFor="let comment of comments">
+      <div class="column alert alert-secondary">
+        <div class="row">
+          <b>{{comment.userUsername}}:</b>
+        </div>
+        <div class="row">
+          {{comment.commentText}}
+        </div>
+        <br>
+        <div *ngIf="comment.receiverCommentId" class="row col-sm-auto">
+          <div class="alert alert-light">
+            <i>{{comment.receiverCommentText}}</i>
+          </div>
+        </div>
+        <div class="row">
+          <button type="button" class="btn btn-info" (click)="clickOnAnswer(comment.id)">answer</button>
+        </div>
+      </div>
+    </div>
+    <form (ngSubmit)="onSubmit()" enctype="multipart/form-data" [formGroup]="commentsForm" novalidate>
+      <div class="form-group">
+        <label *ngIf="!isAnswer" class="col-md-4">Create comment</label>
+        <label *ngIf="isAnswer" class="col-md-4">Create answer</label>
+        <label for="commentText"></label>
+        <textarea type="text" class="form-control" id="commentText" formControlName="commentText" required [(ngModel)]="newComment.commentText" #id [(ngModel)] = "newComment.commentText" name="commentText"></textarea>
+      </div>
+      <div *ngIf="commentsForm.controls['commentText'].invalid && (commentsForm.controls['commentText'].dirty || commentsForm.controls['commentText'].touched)">
+        <div *ngIf="commentsForm.controls['commentText'].errors.maxlength" class="alert alert-danger">
+          Comment is very long.
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group column col-sm-auto">
+          <button type="submit" [disabled]="commentsForm.invalid"  class="btn btn-primary">Save comment</button>
+        </div>
+        <div *ngIf="isAnswer" class="column">
+          <button type="button" class="btn btn-danger" (click)="clickOnCancelAnswer()">Cancel answer</button>
+        </div>
+      </div>
+    </form>
   </div>
 </div>
